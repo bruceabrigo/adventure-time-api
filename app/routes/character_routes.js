@@ -12,8 +12,9 @@ const requireToken = passport.authenticate('bearer', { session: false })
 const router = express.Router()
 
 /* ------------------ GET Route (index) ------------------ */
-router.get('/characters', requireToken, (req, res, next) => { 
+router.get('/characters', (req, res, next) => { 
 	Character.find()
+	.populate('owner')
 		.then((characters) => {
 			// `characters` will be an array of Mongoose documents
 			// we want to convert each one to a POJO, so we use `.map` to
@@ -27,7 +28,7 @@ router.get('/characters', requireToken, (req, res, next) => {
 })
 
 /* ------------------ SHOW Route (specific) ------------------ */
-router.get('/characters/:id', requireToken, (req, res, next) => {
+router.get('/characters/:id', (req, res, next) => {
 	// req.params.id will be set based on the `:id` in the route
 	Character.findById(req.params.id)
 		.then(handle404)
