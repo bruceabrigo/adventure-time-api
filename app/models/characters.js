@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-
+const foodSchema = require('./food')
 const characterSchema = new mongoose.Schema(
 	{
 		name: {
@@ -14,6 +14,7 @@ const characterSchema = new mongoose.Schema(
 			type: Boolean,
 			required: true,
 		},
+		foods: [foodSchema],
 		owner: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'User'
